@@ -1,1 +1,63 @@
-hi
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>LittleT6109's Site</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      background: #0f0f0f;
+      color: #eaeaea;
+      max-width: 800px;
+      margin: auto;
+      padding: 2rem;
+    }
+
+    a {
+      color: #7dd3fc;
+      text-decoration: none;
+    }
+
+    .article {
+      padding: 1rem;
+      border-bottom: 1px solid #333;
+    }
+
+    .article:hover {
+      background: #161616;
+    }
+
+    .date {
+      font-size: 0.85rem;
+      color: #aaa;
+    }
+  </style>
+</head>
+<body>
+
+<h1>My Articles</h1>
+<div id="articles"></div>
+
+<script>
+fetch("articles.json")
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById("articles");
+
+    data
+      .sort((a, b) => new Date(b.date) - new Date(a.date))
+      .forEach(article => {
+        const div = document.createElement("div");
+        div.className = "article";
+        div.innerHTML = `
+          <h2><a href="${article.file}">${article.title}</a></h2>
+          <p>${article.description}</p>
+          <div class="date">${article.date}</div>
+        `;
+        container.appendChild(div);
+      });
+  });
+</script>
+
+</body>
+</html>
